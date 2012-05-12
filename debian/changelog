@@ -4,8 +4,9 @@ peless (1.252-2) unstable; urgency=low
   * upgrade rules to use dh8 simplifications
   - add README ChangeLog to debian/docs; before done in old rules
   * upgrade to standards version 3.9.3
+  * add --as-needed to LDFLAGS
 
- -- Paul Elliott <pelliott@blackpatchpanel.com>  Fri, 11 May 2012 20:00:17 -0500
+ -- Paul Elliott <pelliott@blackpatchpanel.com>  Fri, 11 May 2012 20:07:19 -0500
 
 peless (1.252-0ubuntu1) natty; urgency=low
 
