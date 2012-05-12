@@ -3,8 +3,9 @@ peless (1.252-2) unstable; urgency=low
   * convert to "3.0 (quilt)" or "3.0 (native)"
   * upgrade rules to use dh8 simplifications
   - add README ChangeLog to debian/docs; before done in old rules
+  * upgrade to standards version 3.9.3
 
- -- Paul Elliott <pelliott@blackpatchpanel.com>  Fri, 11 May 2012 19:56:22 -0500
+ -- Paul Elliott <pelliott@blackpatchpanel.com>  Fri, 11 May 2012 20:00:17 -0500
 
 peless (1.252-0ubuntu1) natty; urgency=low
 
