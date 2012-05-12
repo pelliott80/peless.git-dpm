@@ -5,8 +5,12 @@ peless (1.252-2) unstable; urgency=low
   - add README ChangeLog to debian/docs; before done in old rules
   * upgrade to standards version 3.9.3
   * add --as-needed to LDFLAGS
+  * use dh-autoreconf to cause autoreconf before autoconf
+  - therefore updates to the package autoconf-archive
+  - .ie boost will be assimilated
+  - build-depends on autoconf-archive
 
- -- Paul Elliott <pelliott@blackpatchpanel.com>  Fri, 11 May 2012 20:07:19 -0500
+ -- Paul Elliott <pelliott@blackpatchpanel.com>  Sat, 12 May 2012 14:46:06 -0500
 
 peless (1.252-0ubuntu1) natty; urgency=low
 

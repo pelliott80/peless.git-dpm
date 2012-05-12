@@ -6,10 +6,11 @@
 BOOST=''
 
 %:
-	dh $@
+	dh $@ --with autoreconf
 
 override_dh_auto_configure:
 	dh_auto_configure -- --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --with-boost-filesystem=$(BOOST) --with-boost-regex=$(BOOST) CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,--as-needed,-z,defs"
 
 override_dh_installchangelogs:
 	dh_installchangelogs ChangeLog
+
