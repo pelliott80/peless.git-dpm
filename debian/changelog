@@ -1,3 +1,9 @@
+peless (1.259-1) unstable; urgency=low
+
+  * new upstream version
+
+ -- Paul Elliott <pelliott@blackpatchpanel.com>  Mon, 14 May 2012 10:04:16 -0500
+
 peless (1.252-2) unstable; urgency=low
 
   * convert to "3.0 (quilt)" or "3.0 (native)"
