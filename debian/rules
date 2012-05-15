@@ -1,5 +1,8 @@
 #!/usr/bin/make -f
 
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
 #BOOST='mt'
 #BOOST='st'
 #In several systems the suffix needed to compile peless may vary; uncomment the suffix for your needs
@@ -14,3 +17,7 @@ override_dh_auto_configure:
 override_dh_installchangelogs:
 	dh_installchangelogs ChangeLog
 
+override_dh_auto_install:
+	dh_auto_install
+	#insure that empty directories are deleted.
+	find $(CURDIR)/debian/peless -type d -empty -delete
