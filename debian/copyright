@@ -1,35 +1,77 @@
-This package was debianized by Giorgio Pioda <gfwp@ticino.com> on
-Wed, 16 May 2007 18:23:33 +0200.
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Contact: Paul Elliott <pelliott@blackpatchpanel.com>
+Source: http://peless.blackpatchpanel.com/
+License: GPL-3+
+Comment: On Debian systems, the complete text of all versions of the GNU
+ General Public License can be found in
+ `/usr/share/common-licenses/'.
+ Upgraded from GPLV2+ to GPLV3+ in 2012 by Paul Elliott
 
-It was downloaded from http://developer.berlios.de/project/showfiles.php?group_id=1681
+Files: *
+Copyright: 2004,2007-2012 Paul Elliott
+License: GPL-3+
+Comment: Upgraded from GPLV2+ to GPLV3+ in 2012 by Paul Elliott
 
-Upstream Author: 
+License: GPL-3+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 3 or any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this package; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+ MA 02110-1301, USA.
 
-    Paul Elliott <pelliott@io.com>
+Files: debian/*
+Copyright: 2007-2009 Giorgio Pioda <gfwp@ticino.com>
+           2012 Paul Elliott <pelliott@blackpatchpanel.com>
+License: GPL-3+
+Comment: Upgraded from GPLV2+ to GPLV3+ in 2012 by Paul Elliott
 
-Copyright: 
+Files: peless.png
+Copyright: 2006 Scott Barninger <barninger@fairfieldcomputers.com> 
+License: GPL-2+
 
-(c) 2004,2007 Paul Elliott <pelliott@io.com>
+License: GPL-2+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2 or any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this package; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+ MA 02110-1301, USA.
 
-    
-License:
+Files: peless.desktop*
+Copyright: 2006 Scott Barninger <barninger@fairfieldcomputers.com> 
+           2012 Paul Elliott <pelliott@blackpatchpanel.com>
+License: GPL-3+
+Comment: Upgraded from GPLV2+ to GPLV3+ in 2012 by Paul Elliott
 
-    This package is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; version 2 dated June, 1991.
-
-    This package is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
- 
-    You should have received a copy of the GNU General Public License
-    along with this package; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
-    MA 02110-1301, USA.
-
-On Debian systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL'.
-
-The Debian packaging is (C) 2007, Giorgio Pioda <gfwp@ticino.com> and
-is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
+Files: ucompose.hpp
+Copyright: 2002 Ole Laursen <olau@hardworking.dk>
+License: LGPL2.1+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public License
+ as published by the Free Software Foundation; either version 2.1 of
+ the License, or (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301
+ USA
