@@ -2,7 +2,7 @@ Source: peless
 Section: utils
 Priority: optional
 Maintainer: Paul Elliott <pelliott@io.com>
-Build-Depends: debhelper (>= 5), autotools-dev, libboost-dev, libboost-regex-dev, libgconfmm-2.6-dev, libgtkmm-2.4-dev, libsigc++-2.0-dev, libcairomm-1.0-dev, libboost-filesystem-dev, libxml-parser-perl, build-essential
+Build-Depends: debhelper (>= 5), autotools-dev, libboost-dev, libboost-regex-dev, libgconfmm-2.6-dev, libgtkmm-2.4-dev, libsigc++-2.0-dev, libcairomm-1.0-dev, libboost-filesystem-dev, libxml-parser-perl, intltool
 Standards-Version: 3.7.2
 
 Package: peless

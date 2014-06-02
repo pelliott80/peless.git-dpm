@@ -1,3 +1,10 @@
+peless (1.199-1) unstable; urgency=low
+
+  * add intltool to Build-depends:  because of complex problem
+  * New upstream release
+
+ -- Paul Elliott <pelliott@BlackPatchPanel.com>  Sat, 15 Aug 2009 00:29:42 -0500
+
 peless (1.193-1) unstable; urgency=low
 
   * New upstream release

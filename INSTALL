@@ -8,6 +8,7 @@ Edit as necessary
 rpmbuild -ba peless.spec
 
 
+Sometimes autoreconf seems to be necessary.
 
 
 To make

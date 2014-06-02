@@ -470,6 +470,7 @@ NoteGmore::NoteGmore(
       sigc::mem_fun(*this, &NoteGmore::find) ) 
 			   );
 
+  // menu item for finding the next match in the buffer.
   edit_menulist.push_back( Gtk::Menu_Helpers::MenuElem(
       // Edit menu item. entries are Fon_t, _Find, _Quit, Find _Next
       // character following _ is accelerator key and must be unique with in menu.
@@ -478,6 +479,15 @@ NoteGmore::NoteGmore(
       Gtk::AccelKey(_("<control>n")),
       sigc::mem_fun(*this, &NoteGmore::find_next) ) 
 			   );
+
+  // Also do search next on F3. This corresponds with the usage 
+  // of many programs.
+  edit_menulist.back().add_accelerator("activate",
+				       get_accel_group(),
+				       GDK_F3,
+				       ( Gdk::ModifierType )0,
+				       Gtk::ACCEL_VISIBLE);
+
 
 
   //Add the menus to the MenuBar:
