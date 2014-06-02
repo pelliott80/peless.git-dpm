@@ -161,7 +161,7 @@ Glib::RefPtr<Gtk::TextBuffer> NoteGmore::Gmore::load_textbuffer_from_file()
 
 
 	      // create failure exception.
-	      Glib::FileError::FileError  
+	      Glib::FileError
 		fail( Glib::FileError::IS_DIRECTORY, 
 		      // error when unable to open text file for reading.
 		      String::ucompose(_("unable to open %1 for reading." 
@@ -183,7 +183,7 @@ Glib::RefPtr<Gtk::TextBuffer> NoteGmore::Gmore::load_textbuffer_from_file()
 		{
 
 		  // create failure exception.
-		  Glib::FileError::FileError  
+		  Glib::FileError
 		    fail( Glib::FileError::Code(errno), 
 			  // error when unable to open text file for reading.
 			  String::ucompose(_("unable to open %1 for reading.\n"), 
@@ -218,7 +218,7 @@ Glib::RefPtr<Gtk::TextBuffer> NoteGmore::Gmore::load_textbuffer_from_file()
     // on catching io errors while doing above.
     // display error dialog.
     // catch io error reading data.
-    catch ( Glib::FileError::FileError ex){
+    catch ( Glib::FileError & ex){
       Gtk::MessageDialog error_message(ex.what());
       error_message.set_modal();
       error_message.run();
@@ -596,16 +596,16 @@ void NoteGmore::add_less_page(const std::string& fullfilename)
 
   // construct our page!
   // hold a pointer to our page locally while we fool with it.
-  std::auto_ptr<Gmore::Gmore>
+  std::auto_ptr<Gmore>
     local_gmore_holder( new 
-			Gmore::Gmore(
+			Gmore(
 				     *this,
 				     fullfilename , 
 				     textview_font_name) 
 			);
   {
     using namespace sigc;
-    Gmore::Gmore & page_to_add( *local_gmore_holder );
+    Gmore & page_to_add( *local_gmore_holder );
 
     //    page_to_add.set_font_in_use(textview_font_name);
 
@@ -694,7 +694,7 @@ void NoteGmore::add_less_page(const std::string& fullfilename)
   // giving deletion responsibility to the notebook
 
   // release the local holder as container takes responsibility for it.
-  notebook.append_page( *manage( local_gmore_holder.release() ), label);
+  notebook.append_page( *(manage( local_gmore_holder.release() )), label);
 };
 
 // if this sub_window_ref is the current page
