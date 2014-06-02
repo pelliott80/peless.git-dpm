@@ -1,3 +1,10 @@
+Sun, 13 May 2015 23:45:11 -0500 release 259
+Sun, 13 May 2015 23:45:11 -0500 remove deprecated Encoding key
+Sun, 13 May 2015 18:53:24 -0500 update to 1.05 of compose library
+Sat, 12 May 2012 23:52:17 -0500 update to GPL V3+
+Sat, 12 May 2012 23:16:15 -0500 fix spelling expresion -> expression
+Wed, 09 May 2012 21:46:00 -0500 new release 1.252
+Wed, 09 May 2012 21:46:00 -0500 boost m4 files from package autconf-archive in /usr/share/aclocal
 Thu, 04 Nov 2010 21:32:27 -0500 new release 1.223
 Thu, 04 Nov 2010 20:45:46 -0500 Gtk::FontSelectionDialog had member get_font_selection which went away
 Tue, 02 Mar 2010 21:29:27 -0600 new release 1.221

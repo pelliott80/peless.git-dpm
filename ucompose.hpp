@@ -3,9 +3,9 @@
  * Uses Glib::ustring instead of std::string which doesn't work with
  * Gtkmm due to character encoding troubles with stringstreams.
  *
- * Version 1.0.4.
+ * Version 1.0.5.
  *
- * Copyright (c) 2002, 03, 04 Ole Laursen <olau@hardworking.dk>.
+ * Copyright (c) 2002, 03, 04, 07 Ole Laursen <olau@hardworking.dk>.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -28,7 +28,7 @@
 //
 //   String::ucompose("This is a %1x%2 matrix.", rows, cols);
 //
-// Search on the web for "string compose library" or see the included
+// See http://people.iola.dk/olau/compose/ or the included
 // README.compose for more details.
 //
 
@@ -148,6 +148,13 @@ namespace UStringPrivate
   template <>
   inline std::string
   Composition::stringify<const char *>(const char *obj)
+  {
+    return obj;
+  }
+
+  template <>
+  inline std::string
+  Composition::stringify<char *>(char *obj)
   {
     return obj;
   }
