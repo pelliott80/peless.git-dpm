@@ -39,7 +39,10 @@ means that the Categories= line of peless.desktop file
 will say GTK;Application;Utility; 
 Note that quoting may be necessary to get ';' characters past any shell.
 
+--with-boost-libdir
 
+Tells the directory to find the boost libraries. For some distros,
+this should be /usr/lib64 for the 64 bit version
 
 
 
