@@ -1,3 +1,10 @@
+peless (1.193-1) unstable; urgency=low
+
+  * New upstream release
+  * add g++ to Build-Depends: of control. resolves libstdc++ ambigutities in opensuse-buildservice
+
+ -- Paul Elliott <pelliott@hrnowl.lug.local>  Tue, 27 Jan 2009 14:25:39 -0600
+
 peless (1.156-2) unstable; urgency=low
 
   * Debian/menu changed to accord for new Applications menu

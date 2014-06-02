@@ -1,4 +1,4 @@
-eThu Apr 19 03:41:34 CDT 2007 added peless man page.
+Thu Apr 19 03:41:34 CDT 2007 added peless man page.
 Fri, 25 May 2007 20:06:44 -0500 fixed copyright notices.
 Sat, 26 May 2007 13:23:14 -0500 changed boost auto* system to use ax_boost_base.m4
 Sat, 26 May 2007 15:55:43 -0500 changed spec file to comply with Fedora requirements.
@@ -12,3 +12,10 @@ Thu,  7 Jun 2007 23:37:13 -0500 distribute peless.xpm
 Sat,  9 Jun 2007 02:18:08 -0500 Categories parmeter now defined by --with-dtcat=xxxx paremeter to ./configure
 Sun, 22 Jul 2007 04:30:15 -0500 Comments added to aid translators.
 Mon, 23 Jul 2007 01:01:16 -0500 moved spec files to spec svn directory, removed from distribution.
+Sat, 17 Jan 2009 09:47:40 -0600 fail more gracefully if the user specifies a directory.
+Sat, 17 Jan 2009 09:54:59 -0600 new default search options.
+Sat, 17 Jan 2009 18:16:20 -0600 fix bug introduced by directory fail gracefully
+Sun, 17 Jan 2009 01:43:22 -0600 carefull when determining if directory.
+Sun, 17 Jan 2009 08:51:46 -0600 update m4 autoconfig boost test macros, new lib=system; must use --with-boost-libdir=%_libdir in .spec files
+Sun, 17 Jan 2009 09:00:18 -0600 link to new boost library boost_system if available.
+Mon, 19 Jan 2009 10:37:32 -0600 New release=193

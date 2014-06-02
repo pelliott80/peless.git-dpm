@@ -35,6 +35,7 @@
 
 
 #include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/exception.hpp>
 #include <boost/bind.hpp>
 #include "ucompose.hpp"
@@ -142,23 +143,58 @@ Glib::RefPtr<Gtk::TextBuffer> NoteGmore::Gmore::load_textbuffer_from_file()
       else   // not empty filename we must open.
 	{
 	  inputPtr=&input;
-	  input.open( filename.c_str() );
-	  // if open failure thow exception.
-	  if ( ! input )
+
+	  // if directory
+	  bool isDir;
+	  try
 	    {
+	      isDir = boost::filesystem::exists(filename) && 
+		boost::filesystem::is_directory(filename);
+	    }
+	  catch (...)
+	    {
+	      isDir = false;
+	    };
+
+	  if ( isDir  )
+	    {
+
 
 	      // create failure exception.
 	      Glib::FileError::FileError  
-		fail( Glib::FileError::Code(errno), 
+		fail( Glib::FileError::IS_DIRECTORY, 
 		      // error when unable to open text file for reading.
-		      String::ucompose(_("unable to open %1 for reading.\n"), 
+		      String::ucompose(_("unable to open %1 for reading." 
+					 " Directory.\n"), 
 				       filename ) 
 		      );
 	      // error when file failed to open.
-	      filename += _(" Failed to Open.");
+	      filename += _(" Failed to Open. Directory");
 	      throw fail;
+
+
+	    }
+	  else
+	    {
+
+	      input.open( filename.c_str() );
+	      // if open failure thow exception.
+	      if ( ! input )
+		{
+
+		  // create failure exception.
+		  Glib::FileError::FileError  
+		    fail( Glib::FileError::Code(errno), 
+			  // error when unable to open text file for reading.
+			  String::ucompose(_("unable to open %1 for reading.\n"), 
+					   filename ) 
+			  );
+		  // error when file failed to open.
+		  filename += _(" Failed to Open.");
+		  throw fail;
+		};
 	    };
-	};
+      };
 
       // in will be a reference to our file input or to cin
       // depending on whether filename was empty.
@@ -528,9 +564,16 @@ void NoteGmore::add_less_page(const std::string& fullfilename)
     {
       try
 	{
-	  // if not empty get boost to parse get leaf end of filename.
 	  boost::filesystem::path filepath(fullfilename);
+	  // if not empty get boost to parse get leaf end of filename.
 	  label= filepath.leaf();
+	  // if directory
+	  if ( boost::filesystem::exists(filepath) && 
+	       boost::filesystem::is_directory(filepath) )
+	    {
+	      // mark label as directory
+	      label += _("-- is a directory --") ;
+	    };
 	}
       // failure to parse path: use whole filename
       // probably fail to open as well.
@@ -538,6 +581,7 @@ void NoteGmore::add_less_page(const std::string& fullfilename)
 	{
 	  label=fullfilename;
 	};
+
     };
 
   // construct our page!

@@ -117,7 +117,7 @@ namespace SearchTextView {  // avoid namespace conficts.
     exact_checkbutton.set_flags(Gtk::CAN_FOCUS);
     exact_checkbutton.set_relief(Gtk::RELIEF_NORMAL);
     exact_checkbutton.set_mode(true);
-    exact_checkbutton.set_active(true);
+    exact_checkbutton.set_active(false);
     reverse_checkbutton.set_flags(Gtk::CAN_FOCUS);
     reverse_checkbutton.set_relief(Gtk::RELIEF_NORMAL);
     reverse_checkbutton.set_mode(true);
@@ -129,11 +129,11 @@ namespace SearchTextView {  // avoid namespace conficts.
     literal_radiobutton.set_flags(Gtk::CAN_FOCUS);
     literal_radiobutton.set_relief(Gtk::RELIEF_NORMAL);
     literal_radiobutton.set_mode(true);
-    literal_radiobutton.set_active(false);
+    literal_radiobutton.set_active(true);
     normal_radiobutton.set_flags(Gtk::CAN_FOCUS);
     normal_radiobutton.set_relief(Gtk::RELIEF_NORMAL);
     normal_radiobutton.set_mode(true);
-    normal_radiobutton.set_active(true);
+    normal_radiobutton.set_active(false);
     basic_radiobutton.set_flags(Gtk::CAN_FOCUS);
     basic_radiobutton.set_relief(Gtk::RELIEF_NORMAL);
     basic_radiobutton.set_mode(true);
