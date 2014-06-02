@@ -1,0 +1,2 @@
+?package(peless):needs="X11" section="Applications/Text"\
+  title="peless" command="/usr/bin/peless" icon="peless.xpm"
