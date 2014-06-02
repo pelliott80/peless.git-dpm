@@ -767,10 +767,10 @@ void NoteGmore::change_font()
   // run dialog if not OK done.
   if (dialog.run() != Gtk::RESPONSE_OK ) return;
   // get the font selection.
-  Gtk::FontSelection& get_selection = *dialog.get_font_selection();
+  //  Gtk::FontSelection& get_selection = *dialog.get_font_selection();
 
   // get the font name from the font selection.
-  textview_font_name = get_selection.get_font_name();
+  textview_font_name = dialog.get_font_name();
   try
     {
       // store the new font name in gconf

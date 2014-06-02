@@ -1,3 +1,5 @@
+Tue, 02 Mar 2010 21:29:27 -0600 new release 1.221
+Tue, 02 Mar 2010 21:16:26 -0600 update autoconf m4 macros
 Wed, 20 Jan 2010 22:40:50 -0600 new version works with gcc-4.5-c++
 Wed, 20 Jan 2010 22:28:59 -0600 Clarify order of evaluation method returns a pointer to
 Wed, 20 Jan 2010 22:23:16 -0600 Use Gmore instead of Gmore::Gmore use konig lookup from within method
