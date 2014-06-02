@@ -1,7 +1,7 @@
-# generated automatically by aclocal 1.10 -*- Autoconf -*-
+# generated automatically by aclocal 1.10.1 -*- Autoconf -*-
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-# 2005, 2006  Free Software Foundation, Inc.
+# 2005, 2006, 2007, 2008  Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -11,10 +11,13 @@
 # even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE.
 
-m4_if(m4_PACKAGE_VERSION, [2.61],,
-[m4_fatal([this file was generated for autoconf 2.61.
-You have another version of autoconf.  If you want to use that,
-you should regenerate the build system entirely.], [63])])
+m4_ifndef([AC_AUTOCONF_VERSION],
+  [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
+m4_if(AC_AUTOCONF_VERSION, [2.63],,
+[m4_warning([this file was generated for autoconf 2.63.
+You have another version of autoconf.  It may work, but is not guaranteed to.
+If you have problems, you may need to regenerate the build system entirely.
+To do so, use the procedure documented by the package, typically `autoreconf'.])])
 
 # Copyright (C) 1995-2002 Free Software Foundation, Inc.
 # Copyright (C) 2001-2003,2004 Red Hat, Inc.
@@ -119,8 +122,7 @@ AC_SUBST($1)dnl
 #-----------------
 glib_DEFUN([GLIB_WITH_NLS],
   dnl NLS is obligatory
-  [AC_REQUIRE([AC_CANONICAL_HOST])dnl
-    USE_NLS=yes
+  [USE_NLS=yes
     AC_SUBST(USE_NLS)
 
     gt_cv_have_gettext=no
@@ -440,9 +442,10 @@ fi])
 
 
 dnl IT_PROG_INTLTOOL([MINIMUM-VERSION], [no-xml])
-# serial 35 IT_PROG_INTLTOOL
-AC_DEFUN([IT_PROG_INTLTOOL],
-[AC_PREREQ([2.50])dnl
+# serial 40 IT_PROG_INTLTOOL
+AC_DEFUN([IT_PROG_INTLTOOL], [
+AC_PREREQ([2.50])dnl
+AC_REQUIRE([AM_NLS])dnl
 
 case "$am__api_version" in
     1.[01234])
@@ -453,15 +456,22 @@ case "$am__api_version" in
 esac
 
 if test -n "$1"; then
-    AC_MSG_CHECKING(for intltool >= $1)
+    AC_MSG_CHECKING([for intltool >= $1])
 
     INTLTOOL_REQUIRED_VERSION_AS_INT=`echo $1 | awk -F. '{ print $ 1 * 1000 + $ 2 * 100 + $ 3; }'`
-    INTLTOOL_APPLIED_VERSION=`awk -F\" '/\\$VERSION / { print $ 2; }' ${ac_aux_dir}/intltool-update.in`
-    [INTLTOOL_APPLIED_VERSION_AS_INT=`awk -F\" '/\\$VERSION / { split($ 2, VERSION, "."); print VERSION[1] * 1000 + VERSION[2] * 100 + VERSION[3];}' ${ac_aux_dir}/intltool-update.in`
+    INTLTOOL_APPLIED_VERSION=`intltool-update --version | head -1 | cut -d" " -f3`
+    [INTLTOOL_APPLIED_VERSION_AS_INT=`echo $INTLTOOL_APPLIED_VERSION | awk -F. '{ print $ 1 * 1000 + $ 2 * 100 + $ 3; }'`
     ]
     AC_MSG_RESULT([$INTLTOOL_APPLIED_VERSION found])
     test "$INTLTOOL_APPLIED_VERSION_AS_INT" -ge "$INTLTOOL_REQUIRED_VERSION_AS_INT" ||
 	AC_MSG_ERROR([Your intltool is too old.  You need intltool $1 or later.])
+fi
+
+AC_PATH_PROG(INTLTOOL_UPDATE, [intltool-update])
+AC_PATH_PROG(INTLTOOL_MERGE, [intltool-merge])
+AC_PATH_PROG(INTLTOOL_EXTRACT, [intltool-extract])
+if test -z "$INTLTOOL_UPDATE" -o -z "$INTLTOOL_MERGE" -o -z "$INTLTOOL_EXTRACT"; then
+    AC_MSG_ERROR([The intltool scripts were not found. Please install intltool.])
 fi
 
   INTLTOOL_DESKTOP_RULE='%.desktop:   %.desktop.in   $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@' 
@@ -482,6 +492,7 @@ INTLTOOL_SOUNDLIST_RULE='%.soundlist: %.soundlist.in $(INTLTOOL_MERGE) $(wildcar
   INTLTOOL_SCHEMAS_RULE='%.schemas:   %.schemas.in   $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -s -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@' 
     INTLTOOL_THEME_RULE='%.theme:     %.theme.in     $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@' 
     INTLTOOL_SERVICE_RULE='%.service: %.service.in   $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'
+   INTLTOOL_POLICY_RULE='%.policy:    %.policy.in    $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -x -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'
 
 AC_SUBST(INTLTOOL_DESKTOP_RULE)
 AC_SUBST(INTLTOOL_DIRECTORY_RULE)
@@ -501,13 +512,24 @@ AC_SUBST(INTLTOOL_CAVES_RULE)
 AC_SUBST(INTLTOOL_SCHEMAS_RULE)
 AC_SUBST(INTLTOOL_THEME_RULE)
 AC_SUBST(INTLTOOL_SERVICE_RULE)
+AC_SUBST(INTLTOOL_POLICY_RULE)
 
-# Use the tools built into the package, not the ones that are installed.
-AC_SUBST(INTLTOOL_EXTRACT, '$(top_builddir)/intltool-extract')
-AC_SUBST(INTLTOOL_MERGE, '$(top_builddir)/intltool-merge')
-AC_SUBST(INTLTOOL_UPDATE, '$(top_builddir)/intltool-update')
+# Check the gettext tools to make sure they are GNU
+AC_PATH_PROG(XGETTEXT, xgettext)
+AC_PATH_PROG(MSGMERGE, msgmerge)
+AC_PATH_PROG(MSGFMT, msgfmt)
+AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
+if test -z "$XGETTEXT" -o -z "$MSGMERGE" -o -z "$MSGFMT"; then
+    AC_MSG_ERROR([GNU gettext tools not found; required for intltool])
+fi
+xgversion="`$XGETTEXT --version|grep '(GNU ' 2> /dev/null`"
+mmversion="`$MSGMERGE --version|grep '(GNU ' 2> /dev/null`"
+mfversion="`$MSGFMT --version|grep '(GNU ' 2> /dev/null`"
+if test -z "$xgversion" -o -z "$mmversion" -o -z "$mfversion"; then
+    AC_MSG_ERROR([GNU gettext tools not found; required for intltool])
+fi
 
-AC_PATH_PROG(INTLTOOL_PERL, perl)
+AC_PATH_PROG(INTLTOOL_PERL, [perl])
 if test -z "$INTLTOOL_PERL"; then
    AC_MSG_ERROR([perl not found; required for intltool])
 fi
@@ -523,19 +545,16 @@ if test "x$2" != "xno-xml"; then
    fi
 fi
 
-AC_PATH_PROG(INTLTOOL_ICONV, iconv, iconv)
-AC_PATH_PROG(INTLTOOL_MSGFMT, msgfmt, msgfmt)
-AC_PATH_PROG(INTLTOOL_MSGMERGE, msgmerge, msgmerge)
-AC_PATH_PROG(INTLTOOL_XGETTEXT, xgettext, xgettext)
-
 # Substitute ALL_LINGUAS so we can use it in po/Makefile
 AC_SUBST(ALL_LINGUAS)
 
 # Set DATADIRNAME correctly if it is not set yet
 # (copied from glib-gettext.m4)
 if test -z "$DATADIRNAME"; then
-  AC_TRY_LINK(, [extern int _nl_msg_cat_cntr;
-                 return _nl_msg_cat_cntr],
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM([[]],
+                     [[extern int _nl_msg_cat_cntr;
+                       return _nl_msg_cat_cntr]])],
     [DATADIRNAME=share],
     [case $host in
     *-*-solaris*)
@@ -556,48 +575,6 @@ AC_SUBST(DATADIRNAME)
 
 IT_PO_SUBDIR([po])
 
-dnl The following is very similar to
-dnl
-dnl	AC_CONFIG_FILES([intltool-extract intltool-merge intltool-update])
-dnl
-dnl with the following slight differences:
-dnl  - the *.in files are in ac_aux_dir,
-dnl  - if the file haven't changed upon reconfigure, it's not touched,
-dnl  - the evaluation of the third parameter enables a hack which computes
-dnl    the actual value of $libdir,
-dnl  - the user sees "executing intltool commands", instead of
-dnl    "creating intltool-extract" and such.
-dnl
-dnl Nothing crucial here, and we could use AC_CONFIG_FILES, if there were
-dnl a reason for it.
-
-AC_CONFIG_COMMANDS([intltool], [
-
-for file in intltool-extract intltool-merge intltool-update; do
-  sed -e "s|@INTLTOOL_EXTRACT@|`pwd`/intltool-extract|g" \
-      -e "s|@INTLTOOL_LIBDIR@|${INTLTOOL_LIBDIR}|g" \
-      -e "s|@INTLTOOL_ICONV@|${INTLTOOL_ICONV}|g" \
-      -e "s|@INTLTOOL_MSGFMT@|${INTLTOOL_MSGFMT}|g" \
-      -e "s|@INTLTOOL_MSGMERGE@|${INTLTOOL_MSGMERGE}|g" \
-      -e "s|@INTLTOOL_XGETTEXT@|${INTLTOOL_XGETTEXT}|g" \
-      -e "s|@INTLTOOL_PERL@|${INTLTOOL_PERL}|g" \
-	< ${ac_aux_dir}/${file}.in > ${file}.out
-  if cmp -s ${file} ${file}.out 2>/dev/null; then
-    rm -f ${file}.out
-  else
-    mv -f ${file}.out ${file}
-  fi
-  chmod ugo+x ${file}
-  chmod u+w ${file}
-done
-
-],
-[INTLTOOL_PERL='${INTLTOOL_PERL}' ac_aux_dir='${ac_aux_dir}'
-prefix="$prefix" exec_prefix="$exec_prefix" INTLTOOL_LIBDIR="$libdir" 
-INTLTOOL_EXTRACT='${INTLTOOL_EXTRACT}' INTLTOOL_ICONV='${INTLTOOL_ICONV}'
-INTLTOOL_MSGFMT='${INTLTOOL_MSGFMT}' INTLTOOL_MSGMERGE='${INTLTOOL_MSGMERGE}'
-INTLTOOL_XGETTEXT='${INTLTOOL_XGETTEXT}'])
-
 ])
 
 
@@ -613,6 +590,9 @@ dnl The following CONFIG_COMMANDS should be exetuted at the very end
 dnl of config.status.
 AC_CONFIG_COMMANDS_PRE([
   AC_CONFIG_COMMANDS([$1/stamp-it], [
+    if [ ! grep "^# INTLTOOL_MAKEFILE$" "$1/Makefile.in" ]; then
+       AC_MSG_ERROR([$1/Makefile.in.in was not created by intltoolize.])
+    fi
     rm -f "$1/stamp-it" "$1/stamp-it.tmp" "$1/POTFILES" "$1/Makefile.tmp"
     >"$1/stamp-it.tmp"
     [sed '/^#/d
@@ -621,27 +601,54 @@ AC_CONFIG_COMMANDS_PRE([
 	'"s|^|	$ac_top_srcdir/|" \
       "$srcdir/$1/POTFILES.in" | sed '$!s/$/ \\/' >"$1/POTFILES"
     ]
-    if test ! -f "$1/Makefile"; then
-      AC_MSG_ERROR([$1/Makefile is not ready.])
-    fi
-    mv "$1/Makefile" "$1/Makefile.tmp"
     [sed '/^POTFILES =/,/[^\\]$/ {
 		/^POTFILES =/!d
 		r $1/POTFILES
 	  }
-	 ' "$1/Makefile.tmp" >"$1/Makefile"]
+	 ' "$1/Makefile.in" >"$1/Makefile"]
     rm -f "$1/Makefile.tmp"
     mv "$1/stamp-it.tmp" "$1/stamp-it"
   ])
 ])dnl
 ])
 
-
 # deprecated macros
 AU_ALIAS([AC_PROG_INTLTOOL], [IT_PROG_INTLTOOL])
 # A hint is needed for aclocal from Automake <= 1.9.4:
 # AC_DEFUN([AC_PROG_INTLTOOL], ...)
 
+
+# nls.m4 serial 3 (gettext-0.15)
+dnl Copyright (C) 1995-2003, 2005-2006 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+dnl
+dnl This file can can be used in projects which are not available under
+dnl the GNU General Public License or the GNU Library General Public
+dnl License but which still want to provide support for the GNU gettext
+dnl functionality.
+dnl Please note that the actual code of the GNU gettext library is covered
+dnl by the GNU Library General Public License, and the rest of the GNU
+dnl gettext package package is covered by the GNU General Public License.
+dnl They are *not* in the public domain.
+
+dnl Authors:
+dnl   Ulrich Drepper <drepper@cygnus.com>, 1995-2000.
+dnl   Bruno Haible <haible@clisp.cons.org>, 2000-2003.
+
+AC_PREREQ(2.50)
+
+AC_DEFUN([AM_NLS],
+[
+  AC_MSG_CHECKING([whether NLS is requested])
+  dnl Default is enabled NLS
+  AC_ARG_ENABLE(nls,
+    [  --disable-nls           do not use Native Language Support],
+    USE_NLS=$enableval, USE_NLS=yes)
+  AC_MSG_RESULT($USE_NLS)
+  AC_SUBST(USE_NLS)
+])
 
 # pkg.m4 - Macros to locate and utilise pkg-config.            -*- Autoconf -*-
 # 
@@ -711,16 +718,14 @@ fi])
 # _PKG_CONFIG([VARIABLE], [COMMAND], [MODULES])
 # ---------------------------------------------
 m4_define([_PKG_CONFIG],
-[if test -n "$PKG_CONFIG"; then
-    if test -n "$$1"; then
-        pkg_cv_[]$1="$$1"
-    else
-        PKG_CHECK_EXISTS([$3],
-                         [pkg_cv_[]$1=`$PKG_CONFIG --[]$2 "$3" 2>/dev/null`],
-			 [pkg_failed=yes])
-    fi
-else
-	pkg_failed=untried
+[if test -n "$$1"; then
+    pkg_cv_[]$1="$$1"
+ elif test -n "$PKG_CONFIG"; then
+    PKG_CHECK_EXISTS([$3],
+                     [pkg_cv_[]$1=`$PKG_CONFIG --[]$2 "$3" 2>/dev/null`],
+		     [pkg_failed=yes])
+ else
+    pkg_failed=untried
 fi[]dnl
 ])# _PKG_CONFIG
 
@@ -764,9 +769,9 @@ See the pkg-config man page for more details.])
 if test $pkg_failed = yes; then
         _PKG_SHORT_ERRORS_SUPPORTED
         if test $_pkg_short_errors_supported = yes; then
-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "$2"`
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "$2" 2>&1`
         else 
-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2"`
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --print-errors "$2" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$$1[]_PKG_ERRORS" >&AS_MESSAGE_LOG_FD
@@ -791,7 +796,7 @@ path to pkg-config.
 
 _PKG_TEXT
 
-To get pkg-config, see <http://www.freedesktop.org/software/pkgconfig>.])],
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.])],
 		[$4])
 else
 	$1[]_CFLAGS=$pkg_cv_[]$1[]_CFLAGS
@@ -801,7 +806,7 @@ else
 fi[]dnl
 ])# PKG_CHECK_MODULES
 
-# Copyright (C) 2002, 2003, 2005, 2006  Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2005, 2006, 2007  Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -816,7 +821,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],
 [am__api_version='1.10'
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
-m4_if([$1], [1.10], [],
+m4_if([$1], [1.10.1], [],
       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
 
@@ -832,8 +837,10 @@ m4_define([_AM_AUTOCONF_VERSION], [])
 # Call AM_AUTOMAKE_VERSION and AM_AUTOMAKE_VERSION so they can be traced.
 # This function is AC_REQUIREd by AC_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-[AM_AUTOMAKE_VERSION([1.10])dnl
-_AM_AUTOCONF_VERSION(m4_PACKAGE_VERSION)])
+[AM_AUTOMAKE_VERSION([1.10.1])dnl
+m4_ifndef([AC_AUTOCONF_VERSION],
+  [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
+_AM_AUTOCONF_VERSION(AC_AUTOCONF_VERSION)])
 
 # AM_AUX_DIR_EXPAND                                         -*- Autoconf -*-
 
@@ -1105,7 +1112,7 @@ AC_DEFUN([_AM_OUTPUT_DEPENDENCY_COMMANDS],
   # each Makefile.in and add a new line on top of each file to say so.
   # Grep'ing the whole file is not good either: AIX grep has a line
   # limit of 2048, but all sed's we know have understand at least 4000.
-  if sed 10q "$mf" | grep '^#.*generated by automake' > /dev/null 2>&1; then
+  if sed -n 's,^#.*generated by automake.*,X,p' "$mf" | grep X >/dev/null 2>&1; then
     dirpart=`AS_DIRNAME("$mf")`
   else
     continue
@@ -1153,13 +1160,13 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 # Do all the work for Automake.                             -*- Autoconf -*-
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-# 2005, 2006 Free Software Foundation, Inc.
+# 2005, 2006, 2008 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# serial 12
+# serial 13
 
 # This macro actually does too much.  Some checks are only needed if
 # your package does certain things.  But this isn't really a big deal.
@@ -1264,16 +1271,17 @@ AC_PROVIDE_IFELSE([AC_PROG_OBJC],
 # our stamp files there.
 AC_DEFUN([_AC_AM_CONFIG_HEADER_HOOK],
 [# Compute $1's index in $config_headers.
+_am_arg=$1
 _am_stamp_count=1
 for _am_header in $config_headers :; do
   case $_am_header in
-    $1 | $1:* )
+    $_am_arg | $_am_arg:* )
       break ;;
     * )
       _am_stamp_count=`expr $_am_stamp_count + 1` ;;
   esac
 done
-echo "timestamp for $1" >`AS_DIRNAME([$1])`/stamp-h[]$_am_stamp_count])
+echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
 
 # Copyright (C) 2001, 2003, 2005  Free Software Foundation, Inc.
 #
@@ -1545,7 +1553,7 @@ AC_SUBST([INSTALL_STRIP_PROGRAM])])
 
 # _AM_SUBST_NOTMAKE(VARIABLE)
 # ---------------------------
-# Prevent Automake from outputing VARIABLE = @VARIABLE@ in Makefile.in.
+# Prevent Automake from outputting VARIABLE = @VARIABLE@ in Makefile.in.
 # This macro is traced by Automake.
 AC_DEFUN([_AM_SUBST_NOTMAKE])
 

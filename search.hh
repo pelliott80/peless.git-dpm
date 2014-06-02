@@ -31,6 +31,8 @@
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/checkbutton.h>
 
+#include <boost/static_assert.hpp>
+#include <boost/type_traits.hpp>
 #include <boost/regex.hpp>
 
 #include "internat.hh"
@@ -42,94 +44,20 @@
 
 // I am requiring that wchar_t be a UCS-4 that is =gunichar with static-cast
 
+BOOST_STATIC_ASSERT((boost::is_convertible<Gtk::TextBuffer::iterator::value_type,
+		     wchar_t>::value));
+// Gtk::TextBuffer::iterator::value_type is gunichar
+
+// because Gtk::TextBuffer::iterator::value_type i.e. gunichar
+// is convertable to wchar  Gtk::TextBuffer::iterator
+// is also an Input Iterator over wchar and can be used everywhere
+// boost::regex requires an iterator.
+
 
 // interface for searching TextViews for regular expressions.
 
 namespace SearchTextView {  // avoid namespace conficts.
 
-  // convert an iterator by using static_cast on the "pointed to" type.
-  // Am I reinventing the wheel here? If so, email pelliott@io.com
-
-  // modify iterator's pointed to type.
-  //Requirement: OldIter must be bi-di traversal iterator
-  //with equality
-  // static_cast<New>(OltIter::value_type) must be OK.
-  //Result is bidi traversal iterator with value_type New
-  //can be assigned or converted back to OldIter
-template<typename New, typename OldIter >
-class NewIter
-{
-public:
-  // required typdefs when defing an iterator
-  // most come from OldIter.
-  typedef typename OldIter::iterator_category iterator_category;
-  // this type changes!
-  typedef New value_type;
-  typedef typename OldIter::difference_type difference_type;
-  typedef typename OldIter::reference     reference;
-  typedef New *pointer;
-
-  // required default constructor
-  NewIter(): base() {};
-  // can create one from an OldIter
-  NewIter(const OldIter& existing):
-    base(existing)
-  {
-  };
-
-  // convert back to OldIter by returning base!
-  operator OldIter&()
-  {
-    return base;
-  };
-
-  // can assign to OldIter by assigning to base
-  OldIter& operator=(OldIter& to)
-  {
-    to=base;
-    return to;
-  };
-
-  // value operator by static cast of value of base!
-  value_type operator*() 
-  { 
-    return static_cast<value_type>( base.operator*() ); 
-  };
-
-  // equality operators
-  bool operator==(const NewIter& other) const
-  {
-    return ( base == other.base );
-  };
-
-  bool operator!=(const NewIter& other) const
-  {
-    return ( base != other.base );
-  };
-
-
-  // do transversal operators by refering to base!
-  NewIter& operator++() { base.operator++(); return *this; };
-  NewIter const operator++(int i) 
-  {
-    const NewIter nv( *this );
-    base.operator++(i);
-    return nv;
-  };
-
-  NewIter& operator--() { base.operator--(); return *this; };
-  NewIter const operator--(int i) 
-  {
-    const NewIter nv ( *this );
-    base.operator--(i);
-    return nv;
-  };
-
-private:
-  // NewIter "has-a" OldIter which makes it work!
-  OldIter base;
-
-};
 
   //This class has a dialog that gets a regular expression to search for!
 
@@ -204,7 +132,7 @@ public:
 
   // iterator over text buffer converted so that regex_search
   // can use it! changes value type returned with static_cast<>
-  typedef SearchTextView::NewIter<wchar_t,Gtk::TextBuffer::iterator> 
+  typedef Gtk::TextBuffer::iterator
                                                      TextBufferIterWchar;
 
 private:

@@ -19,3 +19,5 @@ Sun, 17 Jan 2009 01:43:22 -0600 carefull when determining if directory.
 Sun, 17 Jan 2009 08:51:46 -0600 update m4 autoconfig boost test macros, new lib=system; must use --with-boost-libdir=%_libdir in .spec files
 Sun, 17 Jan 2009 09:00:18 -0600 link to new boost library boost_system if available.
 Mon, 19 Jan 2009 10:37:32 -0600 New release=193
+Mon,  2 Feb 2009 09:51:52 -0600 Remove NewIter from search, was not needed because TextBuffer::iterator is an iterator over wchar_t
+Tue,  3 Feb 2009 00:33:54 -0600 Keyboard acclerator F3 causes search next.

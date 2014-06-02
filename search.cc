@@ -173,9 +173,6 @@ namespace SearchTextView {  // avoid namespace conficts.
     //show();
   };
 
-  // iterator iterates over ustrings but value_type is wchar_t
-  // as required by boost::assign.
-  typedef NewIter<wchar_t,Glib::ustring::iterator> wchar_ustring_iterator;
 
   // run the dialog above to get regular expression to search
   // assign to regular expression.
@@ -221,8 +218,8 @@ namespace SearchTextView {  // avoid namespace conficts.
 	      // assign to the regular expression.
 	      assign(
 		     //convert the iterator to type required by assign.
-		   wchar_ustring_iterator(regex_string.begin()),
-		   wchar_ustring_iterator(regex_string.end()),
+		   regex_string.begin(),
+		   regex_string.end(),
 		   flags);
 
 	    }

@@ -5,7 +5,7 @@ gtkmm programming.
 While working on this project I found the following problem
 and the pending SigC solution
 
-To: Paul Elliott <pelliott@io.com>
+To: Paul Elliott <pelliott@blackpatchpanel.com>
 Cc: libsigc-list@gnome.org
 Subject: Re: [sigc] binding a arguement which is a reference
 
@@ -135,9 +135,9 @@ Cheers!
 > Bernard
 > 
 > --
-> Paul Elliott                       1(512)837-1096
-> pelliott@io.com                    PMB 181, 11900 Metric Blvd Suite J
-> http://www.io.com/~pelliott/pme/   Austin TX 78758-3117
+> Paul Elliott                                         1(512)837-1096
+> pelliott@blackpatchpanel.com                         PMB 181, 11900 Metric Blvd Suite J
+> http://www.free.blackpatchpanel.com/pme/index.html   Austin TX 78758-3117
 > 
 _______________________________________________
 libsigc-list mailing list

@@ -24,7 +24,7 @@
 #include  <boost/utility.hpp>
 
 // Am I reinventing the wheel here? If there is a publicly released
-// class that does the same thing, email pelliott@io.com.
+// class that does the same thing, email pelliott@blackpatchpanel.com.
 
 namespace InitTime {
 
