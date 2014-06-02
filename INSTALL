@@ -25,6 +25,19 @@ means peless will be in /usr/local/bin
 means peless will be in /opt/gnome/bin
 DEFAULT=/usr
 
+--with-boost-filesystem=gcc-mt-1_33_1
+--with-boost-regex=gcc-mt-1_33_1
+
+means that peless will link with
+libboost_filesystem-gcc-mt-1_33_1.so and
+libboost_regex-gcc-mt-1_33_1.so
+
+--with-dtcat='GTK;Application;Utility;'
+
+means that the Categories= line of peless.desktop file
+will say GTK;Application;Utility; 
+Note that quoting may be necessary to get ';' characters past any shell.
+
 
 
 

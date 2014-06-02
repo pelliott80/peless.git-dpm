@@ -135,6 +135,7 @@ Glib::RefPtr<Gtk::TextBuffer> NoteGmore::Gmore::load_textbuffer_from_file()
       istream * inputPtr;
       if ( filename.empty() || ( filename == "-" ) )
 	{
+	  // -stdin- name for standard input.
 	  filename= _("-stdin-");
 	  inputPtr= &cin;
 	}
@@ -149,9 +150,11 @@ Glib::RefPtr<Gtk::TextBuffer> NoteGmore::Gmore::load_textbuffer_from_file()
 	      // create failure exception.
 	      Glib::FileError::FileError  
 		fail( Glib::FileError::Code(errno), 
+		      // error when unable to open text file for reading.
 		      String::ucompose(_("unable to open %1 for reading.\n"), 
 				       filename ) 
 		      );
+	      // error when file failed to open.
 	      filename += _(" Failed to Open.");
 	      throw fail;
 	    };
@@ -339,7 +342,9 @@ NoteGmore::NoteGmore(
   notebook.set_scrollable(true);              // changed from glade
 
   // code grabed from glade--
-  set_title(_("Copyright (C) Paul Elliott 2004 -- GPL"));
+
+  // copyright message
+  set_title(_("Copyright (C) Paul Elliott 2007 -- GPL"));
   set_modal(false);
   property_window_position().set_value(Gtk::WIN_POS_NONE);
   set_resizable(true);
@@ -379,21 +384,30 @@ NoteGmore::NoteGmore(
 
   // openpage menu item
   file_menulist.push_back( Gtk::Menu_Helpers::MenuElem(
+      // File menu item. entries are _Open, _Close, _Quit
+      // character following _ is accelerator key and must be unique with in menu.
       _("_Open"),  
+      // letter o corresponds to O in _Open as File menu entry.
       Gtk::AccelKey(_("<control>o")),
       sigc::mem_fun(*this, &NoteGmore::OpenNewPage) ) 
 			   );
 
   // close page menu item.
   file_menulist.push_back( Gtk::Menu_Helpers::MenuElem(
+      // File menu item. entries are _Open, _Close, _Quit
+      // character following _ is accelerator key and must be unique with in menu.
       _("_Close current page"),  
+      // letter c corresponds to c in _Close as File menu entry.
       Gtk::AccelKey(_("<control>c")),
       sigc::mem_fun(*this, &NoteGmore::UnLoadCurrentPage) ) 
 			   );
 
   // quit menu item.
   file_menulist.push_back( Gtk::Menu_Helpers::MenuElem(
+      // File menu item. entries are _Open, _Close, _Quit
+      // character following _ is accelerator key and must be unique with in menu.
       _("_Quit"),  
+      // letter q corresponds to q in _Quit as File menu entry.
       Gtk::AccelKey(_("<control>q")),
       sigc::mem_fun(*(Gtk::Window*)this, &Window::hide) ) 
 			   );
@@ -402,20 +416,29 @@ NoteGmore::NoteGmore(
 
   // font menu item.
   edit_menulist.push_back( Gtk::Menu_Helpers::MenuElem(
+      // Edit menu item. entries are Fon_t, _Find, _Quit, Find _Next
+      // character following _ is accelerator key and must be unique with in menu.
       _("Fon_t"),  
+      // letter t corresponds to t in "Fon_t" as Edit menu entry.
       Gtk::AccelKey(_("<control>t")),
       sigc::mem_fun(*this, &NoteGmore::change_font) ) 
 			   );
 
   //menu items for finding text in buffer
   edit_menulist.push_back( Gtk::Menu_Helpers::MenuElem(
+      // Edit menu item. entries are Fon_t, _Find, _Quit, Find _Next
+      // character following _ is accelerator key and must be unique with in menu.
       _("_Find"),  
+      // letter f corresponds to f in "_Find" as Edit menu entry.
       Gtk::AccelKey(_("<control>f")),
       sigc::mem_fun(*this, &NoteGmore::find) ) 
 			   );
 
   edit_menulist.push_back( Gtk::Menu_Helpers::MenuElem(
+      // Edit menu item. entries are Fon_t, _Find, _Quit, Find _Next
+      // character following _ is accelerator key and must be unique with in menu.
       _("Find _Next"),  
+      // letter n corresponds to n in "_Next" as Edit menu entry.
       Gtk::AccelKey(_("<control>n")),
       sigc::mem_fun(*this, &NoteGmore::find_next) ) 
 			   );
@@ -424,9 +447,15 @@ NoteGmore::NoteGmore(
   //Add the menus to the MenuBar:
   // file menu
   m_MenuBar.items().push_back( 
+			      // main menu item. Items are "_File", "_Edit"
+			      // Character following _ is acclerator key
+			      // must be unique for main menu
 	Gtk::Menu_Helpers::MenuElem(_("_File"), m_Menu_File) );
   // edit menu
   m_MenuBar.items().push_back( 
+			      // main menu item. Items are "_File", "_Edit"
+			      // Character following _ is acclerator key
+			      // must be unique for main menu
         Gtk::Menu_Helpers::MenuElem(_("_Edit"), m_Menu_Edit) );
 
   //Add the MenuBar to the window:
@@ -464,7 +493,7 @@ NoteGmore::~NoteGmore()
     }
   catch( Gnome::Conf::Error& error )
     {
-      // problem saving font
+      // problem saving font, occurs when Gnome::Conf fails
       Glib::ustring text(_("error saving window size in gconf\n"));
       text += error.what();
       text += '\n';
@@ -491,6 +520,8 @@ void NoteGmore::add_less_page(const std::string& fullfilename)
   if ( fullfilename.empty() )
     {
       // STDIN if empty.
+
+      // name of standard input
       label=_("STDIN");
     }
   else
@@ -524,7 +555,8 @@ void NoteGmore::add_less_page(const std::string& fullfilename)
 
     //    page_to_add.set_font_in_use(textview_font_name);
 
-    page_to_add.set_external_title( _("Gmore : ") + fullfilename );
+    // "peless" name of this program.
+    page_to_add.set_external_title( _("peless : ") + fullfilename );
 
 
 
@@ -637,6 +669,8 @@ void NoteGmore::OpenNewPage()
 {
 
   // setup open file dialog.
+
+  // message to get name of file to display.
   Gtk::FileSelection selection( _("Select File to display") );
   selection.set_select_multiple(true);
   selection.hide_fileop_buttons();
@@ -690,7 +724,7 @@ void NoteGmore::change_font()
     }
   catch( Gnome::Conf::Error& error )
     {
-      // problem saving font
+      // problem saving font, Gnome::Conf failed
       Glib::ustring text(_("error saving fontname in gconf\n"));
       text += error.what();
       text += '\n';
