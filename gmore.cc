@@ -1,6 +1,6 @@
 //
 //     PELESS TABBED TEXT FILE LISTER.
-//     Copyright (C) 2004,2007 Paul Elliott
+//     Copyright (C) 2004,2007,2012 Paul Elliott
 //     
 //     This file is part of peless.
 // 
@@ -33,7 +33,7 @@
 #include <string>
 #include <cerrno>
 
-
+#include <boost/version.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/exception.hpp>
@@ -576,7 +576,16 @@ void NoteGmore::add_less_page(const std::string& fullfilename)
 	{
 	  boost::filesystem::path filepath(fullfilename);
 	  // if not empty get boost to parse get leaf end of filename.
-	  label= filepath.leaf();
+
+	  // before version 46 filename was a string
+	  // after ver 46 you call string to get the string.
+	  // leaf replaced by filename which is correct most versions.
+	  label= filepath.filename()
+#if (BOOST_VERSION >= 104600)
+	    .string()
+#endif
+	    ;
+
 	  // if directory
 	  if ( boost::filesystem::exists(filepath) && 
 	       boost::filesystem::is_directory(filepath) )

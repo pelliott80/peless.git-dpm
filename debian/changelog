@@ -1,14 +1,26 @@
-peless (1.223-1) unstable; urgency=low
+peless (1.252-0ubuntu1) natty; urgency=low
 
-  * New Distro on SuseBuildService
+  * New upstream release
 
- -- Paul Elliott <pelliott@BlackPatchPanel.com>  Mon, 20 Dec 2010 00:44:38 -0600
+ -- Paul Elliott <pelliott@blackpatchpanel.com>  Tue, 08 May 2012 11:28:07 -0500
+
+peless (1.243-0ubuntu1) natty; urgency=low
+
+  * New upstream release
+
+ -- Paul Elliott <pelliott@blackpatchpanel.com>  Fri, 04 May 2012 16:10:54 -0500
 
 peless (1.223-1) unstable; urgency=low
 
   * New upstream release
 
- -- Paul Elliott <pelliott@BlackPatchPanel.com>  Thu, 04 Nov 2010 23:42:56 -0500
+ -- Paul Elliott <pelliott@BlackPatchPanel.com>  Thu, 04 Nov 2010 22:06:08 -0500
+
+peless (1.221-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Paul Elliott <pelliott@BlackPatchPanel.com>  Tue, 02 Mar 2010 21:43:25 -0600
 
 peless (1.211-1) unstable; urgency=low
 

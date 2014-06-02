@@ -1,5 +1,5 @@
 #m4 macros needed to configure, link boost
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS         = -I m4 -I /usr/share/aclocal
 # program we want built
 bin_PROGRAMS = peless
 
@@ -21,7 +21,7 @@ peless_SOURCES = peless.cc gmore.cc search.cc gmore.hh inittime.hh internat.hh s
 man1_MANS = peless.1
 
 #extra files
-EXTRA_DIST = philo.txt INTERNATIONALIZATION    peless.png peless.xpm   peless.1  m4/ax_boost_base.m4 m4/ax_boost_filesystem.m4 m4/ax_boost_regex.m4 intltool-extract.in intltool-merge.in intltool-update.in po/LINGUAS po/POTFILES.in po/Makefile.in.in 
+EXTRA_DIST = philo.txt INTERNATIONALIZATION    peless.png peless.xpm   peless.1   intltool-extract.in intltool-merge.in intltool-update.in po/LINGUAS po/POTFILES.in po/Makefile.in.in m4/empty_dir
 
 
 #clean this created file after each make

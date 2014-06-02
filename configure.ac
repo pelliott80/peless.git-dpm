@@ -2,13 +2,14 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.51)
- AC_INIT(peless, 1.223)
+ AC_INIT(peless, 1.252)
  AC_CONFIG_SRCDIR([peless.cc])
  AC_CONFIG_HEADER([config.h])
  AM_INIT_AUTOMAKE([dist-bzip2])
 
 #required for internationalization
 IT_PROG_INTLTOOL([0.35.0])
+
 
 GETTEXT_PACKAGE=peless
 AC_SUBST(GETTEXT_PACKAGE)
