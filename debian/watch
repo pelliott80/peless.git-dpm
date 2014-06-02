@@ -1,0 +1,6 @@
+version=3
+
+opts=downloadurlmangle=s/prdownload/download/ \
+  http://developer.berlios.de/project/showfiles.php?group_id=1681 \
+  http://prdownload.berlios.de/peless/peless-(.*).tar.(?:gz|bz2)
+
