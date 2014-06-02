@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.51)
- AC_INIT(peless, 1.156)
+ AC_INIT(peless, 1.193)
  AC_CONFIG_SRCDIR([peless.cc])
  AC_CONFIG_HEADER([config.h])
  AM_INIT_AUTOMAKE([dist-bzip2])
@@ -60,6 +60,8 @@ AX_BOOST_BASE([1.32.1])
 AX_BOOST_FILESYSTEM
 #use the boost regex library.
 AX_BOOST_REGEX
+#maybe use boost system
+AX_BOOST_SYSTEM
 
 
 #make this data visible in Makefile.am

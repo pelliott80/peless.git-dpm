@@ -13,7 +13,7 @@ peless_CXXFLAGS = $(DEPS_CFLAGS) $(BOOST_CPPFLAGS) -O2 -g  -DPELESS_LOCALEDIR=\"
 #boost link flags
 peless_LDFLAGS = $(BOOST_LDFLAGS)
 # gtkmm, boost libraries.
-peless_LDADD=$(DEPS_LIBS)  $(BOOST_FILESYSTEM_LIB) $(BOOST_REGEX_LIB)
+peless_LDADD=$(DEPS_LIBS)  $(BOOST_FILESYSTEM_LIB) $(BOOST_REGEX_LIB) $(BOOST_SYSTEM_LIB)
 
 # sources required for peless
 peless_SOURCES = peless.cc gmore.cc search.cc gmore.hh inittime.hh internat.hh search.hh ucompose.hpp
