@@ -1,0 +1,12 @@
+eThu Apr 19 03:41:34 CDT 2007 added peless man page.
+Fri, 25 May 2007 20:06:44 -0500 fixed copyright notices.
+Sat, 26 May 2007 13:23:14 -0500 changed boost auto* system to use ax_boost_base.m4
+Sat, 26 May 2007 15:55:43 -0500 changed spec file to comply with Fedora requirements.
+Sat, 26 May 2007 15:59:34 -0500 compile with -O2 -g
+Mon, 28 May 2007 16:28:47 -0500 clean up exception message for internationalization.
+Fri,  1 Jun 2007 14:50:45 -0500 international set up code added to peless.cc
+Thu,  7 Jun 2007 16:18:19 -0500 international configuration setup
+Thu,  7 Jun 2007 16:19:33 -0500 peless.desktop created by peless.desktop.in.in
+Thu,  7 Jun 2007 16:20:33 -0500 auto.sh changed to use gnome-autogen.sh, setup internationalization
+Thu,  7 Jun 2007 23:37:13 -0500 distribute peless.xpm
+Sat,  9 Jun 2007 02:18:08 -0500 Categories parmeter now defined by --with-dtcat=xxxx paremeter to ./configure

@@ -1,0 +1,110 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH peless 1 "Tue Apr 17 03:46:52 CDT 2007" Linux "User Manuals"
+.SH NAME
+peless \- tabbed X window text file viewer.
+.SH SYNOPSIS
+.B peless
+.I file
+.B ...
+.SH DESCRIPTION
+.B peless
+displays multipile text files under GTK and X11.
+.SH MENUS
+.SS FILE MENUS
+.IP Open 
+Open a new file in a net tab.
+.IP
+You can open one or more files from the resulting file selection dialog.
+.IP Close 
+Close the current tab and its file.
+.IP Quit 
+close all files and and exit peless.
+.SS EDIT MENUS
+.IP Font 
+Choose a new font with which to display all files.
+.IP
+When peless exits the last font used becomes the default font for future invocations of peless.
+.IP Find
+Find a text string or regular expression in the displayed text file.
+This dialog can control multiple features for the search.
+.IP "" 12
+.B "Regular expression type"
+can be one of the following:
+.IP "" 14
+.B literal,
+.B normal,
+.B basic,
+or
+.B
+extended.
+.IP "" 16
+.B literal
+searches for a literal text string not a regular expression:
+This is not regular expression searching at all, but
+simply search for a literal text string. (Searching for dummies.)
+All characters in the string are treated as literals, 
+there are no special characters or escape sequences.
+.IP "" 16
+.B Normal 
+regular expressions:
+Specifies that the grammar recognized by the regular 
+expression engine uses its normal semantics: that is the 
+same as that given in the ECMA-262, ECMAScript Language 
+Specification, Chapter 15 part 10, RegExp 
+(Regular Expression) Objects (FWD.1).
+said to be the same as the way perl searches.
+.IP "" 16
+.B Basic
+specifies that the grammar recognized by the regular 
+expression engine is the same as that used by POSIX 
+basic regular expressions in IEEE Std 1003.1-2001, 
+Portable Operating System Interface (POSIX ), Base 
+Definitions and Headers, Section 9, Regular Expressions (FWD.1).
+said to be the way sed searches. 
+.IP "" 16
+.B Extended
+Specifies that the grammar recognized by the regular 
+expression engine is the same as that used by POSIX 
+extended regular expressions in IEEE Std 1003.1-2001, 
+Portable Operating System Interface (POSIX ), Base 
+Definitions and Headers, Section 9, Regular Expressions (FWD.1).
+Said to be the way egrep searches.
+.IP "" 14
+When the
+.B require exact case match
+checkbox is checked, the searched for string must match the case of the target exactly
+or no match will be found. When unchecked, the case of the searched for string does not
+matter.
+.IP "" 14
+When the 
+.B reverse search direction
+checkbox is checked, the search will procede in the reverse direction, that is
+from the current position toward the beginning of the file.
+.IP "Find next" 8
+Find the same text string or the same regular expression again in the same displayed text file.
+.SH REQUIREMENTS
+Requires the boost library, gtkmm2, gconfmm2.
+.SH DIAGNOSTICS
+.TP
+The following error messages may be displayed by error dialogs:
+.TP
+basic_filebuf::underflow error reading the file
+.TP
+Invalid byte sequence in conversion input
+.TP
+basic_filebuf::underflow error reading the file
+.TP
+Error compiling regular exception:
+.TP
+Regular expresion search failed, continue search from beginning of buffer.
+.TP
+Regular expresion search failed, continue search from end of buffer.
+.TP
+Regular expression search failure.
+.SH BUGS
+The regular expresion searching is done only with the "classic" locale, not necessarily
+the locale that the user is using.
+.SH AUTHOR
+Paul Elliott <pelliott at io dot com>

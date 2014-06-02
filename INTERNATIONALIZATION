@@ -1,0 +1,18 @@
+I only speak English, you can translate if you want.
+
+All strings that need to be translated are indicated with the
+_() macro. So to do the strings, change internat.hh to define 
+this macro correctly, and translate the strings creating a .po file.
+http://www.gtkmm.org/gtkmm2/docs/tutorial/html/ch20.html
+
+I have used the "C" locale for regular expression searching. I
+am not sure this is correct.
+    imbue(std::locale::classic());
+
+In any case wchar_t must be a UCS-4 character for at least regular
+expression parsing! This disqualifies any system where sizeof(whcar_t) == 2
+
+
+#ifndef  __STDC_ISO_10646__
+#error wchar_T must be UCS-4
+#endif // __STDC_ISO_10646__

@@ -1,0 +1,232 @@
+
+My C++ memory philosophy. This is not original. All the ideas here
+I have culled from my C++ reading. I don't remember who to credit.
+
+C++ pointers: DON'T USE THEM (almost).
+
+C++ pointers are a powerful feature in the C++ language. They allow
+powerful framework classes to be created, and give the programmer
+total control over access to memory. In C++, they are a necessary reality.
+
+C++ pointer should be used by experts to create basic classes like containers.
+
+But for your typical Joe Six pack application programmer, C++ pointers
+are too powerful to use. There are too many subtile ways to create
+a memory leak or a reference through a pointer that is no longer valid.
+This leads to bugs!
+
+The misuse of C++ pointers is very costly, and if it is allowed to
+continue, the SUITS may require us to use inferior languages that don't
+have pointers like JAVA.
+
+The good news is that with proper use of current C++ tools, it is almost
+never necessary to use raw C++ pointers!
+
+The typical application program should encapsulate away and hide
+almost all uses of C++ pointers using these tools. This discipline
+will eliminate memory leaks and invalid pointer references!
+
+Let us look at C++ use of pointers and the ways to eliminate them.
+
+I)
+  pointer arithmetic to navigate arrays!
+  RECOMMENDED SOLUTION. Use the STL vector template instead!
+
+  If you do need to use pointer arithmetic to navigate arrays
+  get your code checked 3 times by an expert especially if there
+  is inheritance involved with the base type.
+
+II) To pass objects around from method to method or from object to object.
+    ( No ownership(=deletion responsibility) involved.)
+    RECOMMENDED SOLUTION. Use C++ references instead.
+
+III) Object allocation.
+    This breaks down in to 3 sub-cases:
+    Assume we have a beautiful class MyClass.
+
+    a) the lifetime of the object corresponds to a program block ( {} )
+       (or a program block that could exist.)
+       RECOMMENDED SOLUTION. use local objects instead.
+       example:
+       ------------------BAD--------------
+       {
+         MyClass * my_instance_pointer( new MyClass() );
+
+	 fuck_with_it( *my_instance_pointer );
+
+	 delete my_instance_pointer;
+       };	
+       ------------------BAD--------------
+       The problem is that if fuck_with_it throws an exception, the
+       deletion step will be skipped resulting in a memory leak.
+       Yes I know you could "catch" the exception and do the deletion
+       there but if you do this a lot it will be tedious. And if Joe
+       SixPack messes with your code, he will forget it or mess it up!
+
+       Instead you should do:
+       ------------------GOOD-------------
+       {
+         MyClass my_instance;
+
+	 fuck_with_it(my_instance);
+       };
+       ------------------GOOD-------------
+       The my_instance will automaticly be deleted when the program block
+       is exited at "}" . It is even less lines of code!
+
+       -----WARNING DIGRESSION----------------------
+       If we were coding in java the above would not be good.
+       I forgot to tell you that the destructor on MyClass
+       pushes the control rods back into the reactor, ending the
+       nuclear experiment! This is according to the C++ idiom
+       object construction is resource allocation, object destruction
+       is resource deallocation. You always push in the control
+       rods when you are through with the nuclear reactor! (deallocating it.)
+       When you are coding something in java and you want something
+       to happen when you are through with an object, you damm well
+       better code it yourself, because you might not want to
+       wait for the garbage colector to get it. There is a finalize
+       method, but don't forget to call it! The reactor can get hot
+       very quickly!
+       The JAVA people think that since they handle the allocation/
+       deallocation of memory so well, from their point of view,
+       that they do not have to help handle other resorces. If they
+       did they would have proper destructors! Memory is not the only
+       resource! Files need to be closed, and the lights need to be turned
+       off!
+       -----END WARNING DIGRESSION------------------
+
+
+
+    b) The lifetime of the object corresponds to the lifetime of
+       another class.
+       RECOMMENDED SOLUTION. use contained sub-objects "hasa" instead.
+       ------------------BAD--------------
+       class NewClass
+       {
+       private:
+         MyClass * my_instance_pointer;
+       public:
+         NewClass():my_instance_pointer(new MyClass() )
+         { 
+           OTHER STUFF
+         };
+	 ~NewClass()
+         {
+	   OTHER DESTRUCTOR STUFF
+           delete my_instance_pointer;
+           MORE OTHER DESTRUCTOR STUFF
+         };
+	 A LOT OF OTHER STUFF
+       };
+       ------------------BAD--------------
+       As before, the problem is that "OTHER DESTRUCTOR STUFF" may
+       throw an exception leading to a memory leak.
+       ------------------GOOD-------------
+       class NewClass
+       {
+       private:
+         MyClass my_instance;
+       public:
+         NewClass(): my_instance() )
+         { 
+           OTHER STUFF
+         };
+	 ~NewClass()
+         {
+	   OTHER DESTRUCTOR STUFF
+           MORE OTHER DESTRUCTOR STUFF
+         };
+	 A LOT OF OTHER STUFF
+       };
+       ------------------GOOD-------------
+    c) The object is truly dynamic and its life time does not
+       correspond to the lifetime of any other object or code block.
+       This is the hard case.
+       RECOMMENDED SOLUTION. Keep the object inside a "owner" object
+       at all times which has responsibility for deletion. This "owner"
+       object can be a container or if nothing else will do a std::auto_ptr
+       or boost::smart_ptr. (I think of these objects as single item
+       "containers".)
+
+       Here is an example where we must create an object, compute on it,
+       then possibly add to a container which will take responsibility
+       for deleting it. This happens a lot in GUI programming.
+       ------------------BAD--------------
+       {
+         MyClass * my_instance_pointer( new MyClass() );
+
+	 fuck_with_it( *my_instance_pointer );
+
+	 my_container.add(my_instance_pointer);
+         // my_container will now assume responsibility for deletion.
+       };	
+       ------------------BAD--------------
+       As before it the call to fuck_with_it my throw and exception, but
+       it needs to be a pointer when added to the container, because
+       it must continue to exist when the block that created it ends "}" .
+       ------------------GOOD-------------
+       {
+         std::auto_ptr<MyClass> my_instance_pointer_auto( new MyClass() );
+
+	 fuck_with_it( *my_instance_pointer_auto );
+
+	 my_container.add( my_instance_pointer_auto.release() );
+         // ownership of the instance (deletion responsibility)
+         // is transfered from the auto_ptr to the container.
+       };	
+       ------------------GOOD-------------
+       In the above at all times, the object is owned by an object
+       with deletion responsibility. Either the auto_ptr or
+       the container owns it.
+
+       Well, that is not quite right. New returns a raw pointer as
+       does release. Practically however, there is no chance of an
+       exception between the call to new and the creation of the auto_ptr.
+       And there is no chance of an exception between the call to release
+       an the call to add. If this troubles you, perhaps you think
+       that the interface to my_container should take an auto_ptr
+       as an argument, and to do the release inside of itself. IMHO APIs
+       should not specify pointer arguments as this encourages dangerous
+       coding techniques. Also perhaps there should be a Factory
+       object that chruns out auto_ptr's instead of raw pointers like new.
+       If this were the case perhaps our code could look like this:
+       ------------------HYPOTHETICAL-------------
+       {
+         FACTORY<MyClass> factory;
+         std::auto_ptr<MyClass> my_instance_pointer_auto = factory.newone();
+
+	 fuck_with_it( *my_instance_pointer_auto ); // "*" turns an autopointer
+                                                    // into a reference.
+
+	 my_container.add( my_instance_pointer_auto );
+         // ownership of the instance (deletion responsibility)
+         // is transfered from the auto_ptr to the container. (This
+         // happens inside the "add" call.
+       };	
+       ------------------HYPOTHETICAL-------------
+       In the above, no raw pointers exist anywhere. Except inside
+       container and factory templates, which are carefully written
+       and debugged by experts. Also because the factory and container
+       templates are so general they are widely used. If there were
+       any bugs there, they would have been found by now. So Joe SixPack
+       applications programmer has no opportunity to make a mistake
+       with pointers.
+       Basic Idea: Hide the complexity behind well debugged general
+       abstractions.
+       Besides Joe SixPack, who is really a very smart guy, needs
+       to think about his application, not all the ways pointers
+       can bite him on the ass.
+
+       But the above hypothetical requires that the API desigher
+       do the right thing(TM). He should not use raw pointers in
+       his interface. QT violates this rule. Every widget must be
+       a pointer. Gtkmm partially solves this, but pointers are still
+       required especially when working with containers.
+
+
+       In cases where many objects must share ownership of an object
+       so that the object should be deleted when all reference are
+       finished, is when a shared pointer should be used. Like
+       boost::shared_ptr
+

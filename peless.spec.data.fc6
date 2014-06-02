@@ -1,0 +1,4 @@
+%define boost_prefix /usr
+%define boost_version 1.33.1
+%define _build_requires gtkmm24-devel >= 2.4, gconfmm26-devel >= 2.0, boost-devel = %{boost_version}, libsigc++20-devel
+%define _requires gtkmm24 >= 2.4, gconfmm26 >= 2.0, libsigc++20, boost = %{boost_version}

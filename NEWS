@@ -1,0 +1,169 @@
+This program was create so that the author Paul Elliott could learn
+gtkmm programming.
+
+
+While working on this project I found the following problem
+and the pending SigC solution
+
+To: Paul Elliott <pelliott@io.com>
+Cc: libsigc-list@gnome.org
+Subject: Re: [sigc] binding a arguement which is a reference
+
+Am 2004.02.03 14:07 schrieb(en) Paul Elliott:
+> I found in the archives the following message: See the end of this
+> post:
+> 
+> 
+> I am using sigc++-1.2 and I get a similar message to that mentioned
+> below
+> whenever the parameter I am trying to bind is a reference
+> in the method mentioned in the "slot(...)" call.
+> 
+> Is this a restriction or a bug?? Does the code need to be fixed
+> or a note put in the documentation the the parameter that you bind
+> can not be a reference in the called method?
+
+It is a restriction that will be lifted in sigc++-2.0. You might want
+to test the latest beta release sigc++-1.9.13. Of course, you are
+welcome to patch the documentation for sigc++-1.2!
+
+> Could this be an example of the famous reference to reference
+> problem??
+
+If I remember correctly, the problem with sigc++-1.2 is that the
+bind adaptor explicitly calls the destructors of its bound objects.
+This doesn't work when the objects are references.
+
+> I made a workaround in my code by changing the called method,
+> replace the referenced type T& to boost::reference_wrapper<T>.
+> I got reference_wrapper from the boost libraries.
+> The referenced_wrapper type has "value" semantics in that it
+> has default constructors, copy constructors and assignment operators.
+> 
+> What is the official libsigc+ approach to this problem?
+
+In sigc++-2.0 you would pass the object through sigc::ref()
+so that sigc::bind() can deduce that the value should be bound as
+a reference and not as a value.
+
+Cheers!
+
+  Martin
+
+
+
+> Quoted message follows:
+> ==================cut here with a chain saw==================
+> From: gtkmm mailing list account <gtkmm-list bernard-hugueney org>
+> 
+> To: Martin Schulze <martin-ml hippogriff de>
+> 
+> Cc: gtkmm-list gnome org, libsigc-list gnome org
+> 
+> Subject: [sigc] Re: binding by value, slot taking reference was Re:
+> [gtkmm] binding arguments to slots
+> 
+> Date: Tue, 18 Nov 2003 11:23:31 +0100
+> 
+> 
+> 
+> 
+> Le Mardi 18 Novembre 2003 10:26, Martin Schulze a écrit :
+> > >
+> > > There is still something I don't understand with slot and bind :
+> > >
+> > > I would like to make a slot for a function taking arguments by
+> > > reference:
+> > > program :
+> > > "
+> > > using namespace std;
+> > > using namespace SigC;
+> > >
+> > > void foo1(int& i){++i;}
+> > >
+> > > int main(int argc, char** argv){
+> > > int i=1;
+> > > Slot0<void>slot1=bind(slot(foo1),i);
+> > >  return 0;
+> > > }
+> >
+> > Try to specify the argument type as template parameter, i.e.:
+> >
+> >    Slot0<void> slot1 = bind<int&>(slot(foo1), i);
+> 
+> I shoudl have said I already tried that :-(
+> >
+> > I'm not sure if it works, though - let us know!
+> 
+> same error:
+> 
+> /usr/include/sigc++-1.2/sigc++/bind.h: Dans static member function  
+> �
+> 
+> static    void SigC::AdaptorBindData1_<C1>::dtor(void*) [with C1 =
+> int&] :
+> /usr/include/sigc++-1.2/sigc++/bind.h:167:   instantiated from
+> `SigC::Slot0<R> SigC::bind(const SigC::Slot1<R, C1>&, A1) [with A1 =
+> int&, R = void, C1 = int&]'
+> testLibSigC.cxx:9:   instantiated from here
+> /usr/include/sigc++-1.2/sigc++/bind.h:116: error: destructor name
+> `~int&' does    not match type `int' of expression
+> 
+> >
+> > BTW in libsigc++-2.0 you will be able to write:
+> >
+> >    sigc::slot<void> slot1 = sigc::bind(foo1, sigc::ref(i));
+> >
+> > instead.
+> 
+> Cool, I'll be missing my boost libs less :-)
+> (For the record, I also tried boost::ref(i) to no avail :
+> /usr/include/sigc++-1.2/sigc++/bind.h: Dans static member function
+> static   void SigC::AdaptorBindData1_<C1>::dtor(void*) [with C1 =
+> int&] :
+> /usr/include/sigc++-1.2/sigc++/bind.h:167:   instantiated from
+> `SigC::Slot0<R> SigC::bind(const SigC::Slot1<R, C1>&, A1) [with A1 =
+> boost::reference_wrapper<int>, R = void, C1 = int&]'
+> testLibSigC.cxx:11:   instantiated from here
+> /usr/include/sigc++-1.2/sigc++/bind.h:116: error: destructor name
+> `~int&' does not match type `int' of expression
+> 
+> Now I'm really holding my breath for libsigc++-2.0 in gtkmm.
+> 
+> Thanks again for your kind help !
+> 
+> Bernard
+> 
+> --
+> Paul Elliott                       1(512)837-1096
+> pelliott@io.com                    PMB 181, 11900 Metric Blvd Suite J
+> http://www.io.com/~pelliott/pme/   Austin TX 78758-3117
+> 
+_______________________________________________
+libsigc-list mailing list
+libsigc-list@gnome.org
+http://mail.gnome.org/mailman/listinfo/libsigc-list
+
+
+
+
+We are all interested in the future because that is where you and I
+are going to spend the rest of our lives. Criswell
+
+My friend future events such as these will affect you in the future. Criswell.
+
+Can you prove it did not happen? Criswell.
+
+
+
+What do you think will be the next obstacle the Earth people will put
+in our way? Janis.
+
+ Well as long as they can think we'll have our problems.  But those
+ whom were using cannot think. They are the dead. Brought to simulated
+ life by our electrode guns. You know, it's an interesting thing when
+ you consider the Earth people who can think are so frightened by
+ those who cannot, the dead. Eros.
+
+
+You see, you see, your stupid minds, stupid, stupid. Eros.

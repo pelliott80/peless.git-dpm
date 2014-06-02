@@ -1,0 +1,70 @@
+I wrote this file listing program as an exercise to learn gtkmm programming.
+GPL licence. (see COPYING)
+Used gtkmm and related libraries and boost.
+
+compiled with gconfmm2-2.0.1 and gtkmm2-2.2.10-100
+
+see the file INTERNATIONALIZATION for customizing this program to
+other languages.
+
+To use:
+
+peless LIST-OF-TEXT-FILES-TO DISPLAY.
+
+File menu and Edit menu.
+File:
+you can open a new file. It will be displayed as well.
+yoc can close a file. It will no longer be displayed.
+Of course you can quit!
+
+Edit:
+
+You can change the font you are using to display file.
+
+Searching:
+
+You can enter a new regular expression to search for. (Find)
+You can search again for the same regular expression you searched
+for the last time.
+
+You can require exact case match, or not. (Upper and Lower case
+does or does not matter.)
+
+You can search in the forward or reverse direction.
+(Reverse searching can be slow. Searches in the forward direction
+until failure to find the last string that matches.)
+
+You can control the type of regular expression searching:
+ a) literal
+	This is not regular expression searching at all, but
+	simply search for a literal text string. (Searching for dummies.)
+        All characters in the string are treated as literals, 
+        there are no special characters or escape sequences.
+	
+ b  Normal normal regular expressions:
+        Specifies that the grammar recognized by the regular 
+        expression engine uses its normal semantics: that is the 
+        same as that given in the ECMA-262, ECMAScript Language 
+        Specification, Chapter 15 part 10, RegExp 
+        (Regular Expression) Objects (FWD.1).
+	said to be the same as the way perl searches.
+ c  Basic
+        Specifies that the grammar recognized by the regular 
+        expression engine is the same as that used by POSIX 
+        basic regular expressions in IEEE Std 1003.1-2001, 
+        Portable Operating System Interface (POSIX ), Base 
+        Definitions and Headers, Section 9, Regular Expressions (FWD.1).
+	said to be the way sed searches. 
+ d  Extended
+        Specifies that the grammar recognized by the regular 
+        expression engine is the same as that used by POSIX 
+        extended regular expressions in IEEE Std 1003.1-2001, 
+        Portable Operating System Interface (POSIX ), Base 
+        Definitions and Headers, Section 9, Regular Expressions (FWD.1).
+	Like egrep.
+
+For more info see:
+http://www.boost.org/libs/regex/doc/syntax_option_type.html
+
+
+Send me info about problems. pelliott@io.com
