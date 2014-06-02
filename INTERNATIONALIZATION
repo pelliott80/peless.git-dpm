@@ -16,3 +16,8 @@ expression parsing! This disqualifies any system where sizeof(whcar_t) == 2
 #ifndef  __STDC_ISO_10646__
 #error wchar_T must be UCS-4
 #endif // __STDC_ISO_10646__
+
+
+peless now supports internationalization in po, but with zero language
+support. To get a .pot file, build peless per INSTALLATION, then cd to
+po, then make peless.pot!

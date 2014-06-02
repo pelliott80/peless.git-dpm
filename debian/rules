@@ -11,9 +11,10 @@ else
 	CFLAGS += -O2
 endif
 
-BOOST='mt'
-#To compile in debian etch uncomment the next line and comment the previous one
-#BOOST=''
+#BOOST='mt'
+#BOOS='st'
+#In several systems the suffix needed to compile peless may vary; uncomment the suffix for your needs
+BOOST=''
 
 config.status: configure
 	dh_testdir
@@ -39,7 +40,7 @@ clean:
 	dh_testroot
 	rm -f build-stamp 
 
-	-$(MAKE) distclean
+	[ ! -f Makefile ] || $(MAKE) distclean
 	rm -f config.sub config.guess
 	dh_clean 
 
@@ -47,7 +48,6 @@ install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k 
-	dh_installdirs
 	$(MAKE) DESTDIR=$(CURDIR)/debian/peless install
 
 # Build architecture-independent files here.
@@ -58,7 +58,7 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs ChangeLog
-	dh_installdocs
+	dh_installdocs README
 	dh_installmenu
 	dh_strip
 	dh_compress
