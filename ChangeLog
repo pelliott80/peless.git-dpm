@@ -1,3 +1,5 @@
+Thu, 04 Nov 2010 21:32:27 -0500 new release 1.223
+Thu, 04 Nov 2010 20:45:46 -0500 Gtk::FontSelectionDialog had member get_font_selection which went away
 Tue, 02 Mar 2010 21:29:27 -0600 new release 1.221
 Tue, 02 Mar 2010 21:16:26 -0600 update autoconf m4 macros
 Wed, 20 Jan 2010 22:40:50 -0600 new version works with gcc-4.5-c++
